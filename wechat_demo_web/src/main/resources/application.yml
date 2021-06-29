@@ -1,0 +1,31 @@
+server:
+  port: ${PORT:8888}
+
+spring:
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  datasource:
+    url: ${JAWSDB_URL:jdbc:mysql://localhost:3306/test_db?useUnicode=true&characterEncoding=utf8}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${JAWSDB_USERNAME:root}
+    password: ${JAWSDB_PASSWORD:rootroot}
+    connection:
+      timeout: 60000
+    max:
+      pool:
+        size: 5
+
+wechat:
+  configs:
+    encryptKey: ${ENCRYPT_KEY}
+    miniapp:
+      appid: ${MA_APPID} #微信小程序的appid
+      secret: ${MA_SECRET} #微信小程序的Secret
+      token: ${MA_TOKEN} #微信小程序消息服务器配置的token
+      aesKey: ${MA_AES_KEY} #微信小程序消息服务器配置的EncodingAESKey
+      msgDataFormat: JSON
+    mp:
+      appid: ${MP_APPID} #微信公众号的appid
+      secret: ${MP_SECRET} #微信公众号的Secret
+      token: ${MP_TOKEN} #微信公众号消息服务器配置的token
+      aesKey: ${MP_AES_KEY} #微信公众号消息服务器配置的EncodingAESKey

@@ -103,13 +103,13 @@ public class WechatServiceImpl implements WechatService {
         } else {
             WxMpConfigStorage configStorage = wxMpService.getWxMpConfigStorage();
             WxMpXmlMessage inMessage = WxMpXmlMessage.fromEncryptedXml(requestBody, configStorage, timestamp, nonce, msgSignature);
-            log.debug("\n消息解密后内容为：\n{} ", inMessage.toString());
+            log.debug("\nDecrypted message: \n{} ", inMessage.toString());
             WxMpXmlOutMessage outMessage = wxMpMessageRouter.route(inMessage);
             if (outMessage != null) {
                 outXml = outMessage.toEncryptedXml(configStorage);
             }
         }
-        log.debug("\n组装回复信息：{}", outXml);
+        log.debug("\nResponse message: {}", outXml);
         return outXml;
     }
 

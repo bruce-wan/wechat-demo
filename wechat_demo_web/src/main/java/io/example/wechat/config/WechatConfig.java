@@ -31,7 +31,7 @@ public class WechatConfig {
     public WxMaService getWxMaService() {
         WechatProperties.Config config = wechatProperties.getMiniapp();
         if (config == null) {
-            throw new RuntimeException("读取微信小程序配置失败");
+            throw new RuntimeException("loading wechat miniapp properties fail");
         }
 
         WxMaDefaultConfigImpl wxMaConfig = new WxMaDefaultConfigImpl();
@@ -52,7 +52,7 @@ public class WechatConfig {
         WxMaMessageRouter messageRouter = new WxMaMessageRouter(wxMaService);
         // message log hander
         messageRouter.rule().handler((message, map, service, wxSessionManager) -> {
-            log.info("\n接收到请求消息，内容：{}", message);
+            log.info("\nReceive Wechat message: {}", message);
             return null;
         }).next();
         return messageRouter;
@@ -62,7 +62,7 @@ public class WechatConfig {
     public WxMpService wxMpService() {
         WechatProperties.Config config = wechatProperties.getMp();
         if (config == null) {
-            throw new RuntimeException("读取微信公众号配置失败");
+            throw new RuntimeException("loading wechat mp properties fail");
         }
 
         WxMpServiceImpl wxMpService = new WxMpServiceImpl();
@@ -81,7 +81,7 @@ public class WechatConfig {
         WxMpMessageRouter messageRouter = new WxMpMessageRouter(wxMpService);
         // message log hander
         messageRouter.rule().handler((message, map, service, wxSessionManager) -> {
-            log.info("\n接收到请求消息，内容：{}", message);
+            log.info("\nReceive Wechat message: {}", message);
             return null;
         }).next();
         return messageRouter;

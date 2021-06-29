@@ -1,0 +1,1 @@
+web: java -Dserver.port=${PORT} -jar ./wechat_demo_web/target/wechat-demo-heroku.jar

@@ -24,14 +24,14 @@ public class WechatPortalController {
                        @RequestParam(name = "timestamp", required = false) String timestamp,
                        @RequestParam(name = "nonce", required = false) String nonce,
                        @RequestParam(name = "echostr", required = false) String echostr) {
-        log.info("\n接收到来自微信服务器的认证消息：signature = [{}], timestamp = [{}], nonce = [{}], echostr = [{}]",
+        log.info("\nReceive Wechat authentication message: signature = [{}], timestamp = [{}], nonce = [{}], echostr = [{}]",
                 signature, timestamp, nonce, echostr);
 
         if (StringUtils.isAnyBlank(signature, timestamp, nonce, echostr)) {
-            throw new IllegalArgumentException("请求参数非法，请核实!");
+            throw new IllegalArgumentException("illegal request data!");
         }
 
-        return wechatService.checkSignature(wxtype, timestamp, nonce, signature) ? echostr : "非法请求";
+        return wechatService.checkSignature(wxtype, timestamp, nonce, signature) ? echostr : "illegal request";
     }
 
     @PostMapping
@@ -42,11 +42,11 @@ public class WechatPortalController {
                        @RequestParam("nonce") String nonce,
                        @RequestParam(name = "encrypt_type", required = false) String encryptType,
                        @RequestParam(name = "msg_signature", required = false) String msgSignature) {
-        log.info("\n接收微信请求：[signature=[{}], encryptType=[{}], msgSignature=[{}], timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
+        log.info("\nReceive WeChat request: [signature=[{}], encryptType=[{}], msgSignature=[{}], timestamp=[{}], nonce=[{}], requestBody=[\n{}\n] ",
                 signature, encryptType, msgSignature, timestamp, nonce, requestBody);
 
         if (!wechatService.checkSignature(wxtype, timestamp, nonce, signature)) {
-            throw new IllegalArgumentException("非法请求，可能属于伪造的请求！");
+            throw new IllegalArgumentException("illegal request！");
         }
 
         return wechatService.processMessage(wxtype, requestBody, encryptType, timestamp, nonce, msgSignature);
